@@ -1,58 +1,71 @@
-dir_bin = bin
-dir_src = src
-dir_obj = obj
+Dbin = bin# Binary directory path
+Dsrc = src# Source directory path
+Dobj = obj# Object directory path
 
-dir_src_main = $(dir_src)/main
-dir_src_test = $(dir_src)/test
+M = main# sub-directory for main block
+T = test# sub-directory for test block
 
-dir_obj_main = $(dir_obj)/main
-dir_obj_test = $(dir_obj)/test
+inc = $(src)/$(M)/include# Include directory path
 
-dir_bin_main = $(dir_bin)/main
-dir_bin_test = $(dir_bin)/test
+so_file = libso2gl.so# Binary share-library file
 
-dir_include = $(dir_src)/main/include
+oMain = $(Dobj)/$(M)
+sMain = $(Dsrc)/$(M)
+bMain = $(Dbin)/$(M)
 
-share_lib = so2gl.so
+oTest = $(Dobj)/$(T)
+sTest = $(Dsrc)/$(T)
+bTest = $(Dbin)/$(T)
+
+shLib = $(Dbin)/$(M)/$(so_file)
 
 # Compilation main:
-main: $(share_lib) $(dir_include)
-	cp -r $(dir_include) $(dir_bin_main)/
+cmain: $(shLib)
+	echo $(oMain)
+	make $(shLib)
 
-$(share_lib): $(dir_bin_main) $(dir_obj_main)/gameObject.o
-	gcc -shared -o $(dir_bin_main)/$(share_lib) $(dir_obj_main)/gameObject.o -lstdc++
+$(shLib): $(bMain) $(oMain)/gameObject.o
+	gcc -shared -o $(shLib) $(oMain)/gameObject.o -lstdc++
 	
-$(dir_obj_main)/gameObject.o: $(dir_src_main)/gameObject.cpp $(dir_obj_main)
-	gcc -Wall -fPIC -c $(dir_src_main)/gameObject.cpp -o $(dir_obj_main)/gameObject.o
+$(oMain)/gameObject.o: $(oMain) $(sMain)/gameObject.cpp
+	gcc -Wall -fPIC -c $(sMain)/gameObject.cpp -o $(oMain)/gameObject.o
 
 # Compilation tests:
+ctest: $(sTest)/include $(sTest)/lib/so_file
+	cp -r $(inc) $(sTest)/
 
+$(sTest)/include:
+	cp -r $(inc) $(sTest)/
+
+$(sTest)/lib/so_file: shLib
+	mkdir -p $(sTest)/lib
+	cp $(shLib) $(sTest)/lib/
 
 # Make direcories:
-$(dir_obj):
-	mkdir -p $(dir_obj)
+$(Dobj):
+	mkdir -p $(Dobj)
 
-$(dir_bin):
-	mkdir -p $(dir_obj)
+$(Dbin):
+	mkdir -p $(Dbin)
 
-$(dir_obj_main): $(dir_obj)
-	mkdir -p $(dir_obj_main)
+$(oMain): $(Dobj)
+	mkdir -p $(oMain)
 
-$(dir_obj_test): $(dir_obj)
-	mkdir -p $(dir_obj_test)
+$(bMain): $(Dbin)
+	mkdir -p $(bMain)
 
-$(dir_bin_main): $(dir_bin)
-	mkdir -p $(dir_bin_main)
+$(oTest): $(Dobj)
+	mkdir -p $(oTest)
 
-$(dir_bin_test): $(dir_bin)
-	mkdir -p $(dir_bin_test)
+$(bTest): $(Dbin)
+	mkdir -p $(bTest)
 
 # Clear:
 clear_obj:
-	rm -rf $(dir_obj)
+	rm -rf $(Dobj)
 
 clear_bin:
-	rm -rf $(dir_bin)
+	rm -rf $(Dbin)
 
 clear:
 	make clear_obj
