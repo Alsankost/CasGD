@@ -1,3 +1,5 @@
+#include "include/rooms.h"
+
 namespace CasGD {
 	RoomItem::RoomItem() {
 		//HZ...

@@ -9,8 +9,9 @@ namespace CasGD {
 
 			int getObjectsCount();
 			CasGD::GameObject* getObject(int id);
-			CasGD::GameObject* setObject(int id, GasGD::GameObject* obj);
+			bool setObject(int id, GasGD::GameObject* obj);
 
 			int getIdFromObject(CasGD::GameObject* obj);
+			int getIdFromName(char* name);
 	};
 }
