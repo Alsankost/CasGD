@@ -5,8 +5,13 @@ namespace CasGD {
 	class Game;
 
 	class GameObject {
+		private:
+			char* name;
+
 		public:
-			GameObject();
+			GameObject(char* n);
+
+			char* getName();
 
 			//Events:
 			virtual void e_create(RoomItem*, Game*);
