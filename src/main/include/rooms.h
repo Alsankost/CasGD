@@ -41,4 +41,8 @@ namespace CasGD {
 			float getSpeed();
 			void  setSpeed(float speed);
 	};
+
+	class Room {
+		
+	}
 }

@@ -10,17 +10,17 @@ namespace CasGD {
 		return this->objectsCount;
 	}
 
-	CasGD::GameObject* Register::getObject(int id) {
+	GameObject* Register::getObject(int id) {
 		if (id < 0 || id > this->objectsCount - 1) return 0;
 		return this->objects[id];
 	}
 
-	bool Register::setObject(int id, GasGD::GameObject* obj) {
+	bool Register::setObject(int id, GameObject* obj) {
 		if (id < 0 || id > this->objectsCount - 1 || obj == 0) return false;
 		this->objects[id] = obj;
 	}
 
-	int Register::getIdFromObject(CasGD::GameObject* obj) {
+	int Register::getIdFromObject(GameObject* obj) {
 		for (int i = 0; i < this->objectsCount; i++) {
 			if (objects[i] == obj) {
 				return i;
