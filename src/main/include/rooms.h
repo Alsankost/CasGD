@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <vector>
+
 namespace CasGD {
 	class RoomItem {
 		private:
@@ -10,10 +13,12 @@ namespace CasGD {
 			int dataCount = 0;
 			long* dataList = 0;
 
+			long id = 0;
+
 		public:
-			RoomItem();
-			RoomItem(int x, int y);
-			PoomItem(Point location);
+			RoomItem(long id);
+			RoomItem(long id, int x, int y);
+			PoomItem(long id, Point location);
 
 			//Data:
 			void initData(int count);
@@ -42,7 +47,46 @@ namespace CasGD {
 			void  setSpeed(float speed);
 	};
 
+	class ViewRoom {
+		private:
+			bool isIDType = true;
+			Rectangle bounce;
+			int idTarget;
+
+			float* padding = new float[4]{32, 32, 32, 32}; //px
+		public:
+			ViewRoom(Rectangle bounce, int idTarget);
+			ViewRoom(Rectangle bounce, int idTarget, bool isIDType);
+			ViewRoom(Point location, Resolution size, float h, int idTarget);
+			ViewRoom(Point location, Resolution size, float h, int idTarget, bool isIDType);
+			ViewRoom(float x, float y, float w, float h, int idTarget);
+			ViewRoom(float x, float y, float w, float h, int idTarget, bool isIDType);
+
+			Point getLocation();
+			Resolution getSize();
+			Rectangle getBounce();
+
+			void setLocation(Point location);
+			void setLocation(float x, float y);
+			void setSize(Resolution size);
+			void setSize(float w, float h);
+			void setBounce(Rectangle bounce);
+			void setBounce(float x, float y, float w, float h);
+
+			int  getTargetID();
+			void setTargetID(int idTarget);
+
+			bool isGameObjectTarget();
+	};
+
 	class Room {
-		
-	}
+		private:
+			Resolution size;
+			std::vector<RoomItem> items;
+			std::vector<ViewRoom> views;
+
+		public:
+			
+
+	};
 }

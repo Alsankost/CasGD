@@ -1,14 +1,23 @@
 namespace CasGD {
 	struct Point {
-		int x, y, z;
+		float x, y;
 	};
 
 	struct Polygon {
-		Point p1, p2, p3;
+		Point v1, v2, v3;
 	};
 
 	struct Line {
 		Point p1, p2;
+	};
+
+	struct Resolution {
+		float w, h;
+	};
+
+	struct Redrangle {
+		Point pos;
+		Resolution size;
 	};
 
 	struct Mask {
