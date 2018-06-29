@@ -1,4 +1,5 @@
 #include "geometry.h"
+#include <string>
 
 namespace CasGD {
 	class RoomItem;
@@ -6,12 +7,12 @@ namespace CasGD {
 
 	class GameObject {
 		private:
-			char* name;
+			std::string name;
 
 		public:
-			GameObject(char* n);
+			GameObject(std::string);
 
-			char* getName();
+			std::string getName();
 
 			//Events:
 			virtual void e_create(RoomItem*, Game*);
@@ -20,6 +21,6 @@ namespace CasGD {
 
 			virtual void draw(RoomItem*, Game*, Render*);
 
-			virtual GasGD::Mask* getMask();
+			virtual std::vector<Point> getMask();
 	};
 }

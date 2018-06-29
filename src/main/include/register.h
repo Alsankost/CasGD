@@ -1,3 +1,5 @@
+#include <string>
+
 namespace CasGD {
 	class Register {
 		private:
@@ -12,6 +14,6 @@ namespace CasGD {
 			bool setObject(int id, GasGD::GameObject* obj);
 
 			int getIdFromObject(CasGD::GameObject* obj);
-			int getIdFromName(char* name);
+			int getIdFromName(std::string name);
 	};
 }

@@ -10,8 +10,7 @@ namespace CasGD {
 			float direction = 0;
 			float speed = 0;
 
-			int dataCount = 0;
-			long* dataList = 0;
+			std::std::vector<void*> data;
 
 			long id = 0;
 
@@ -21,7 +20,6 @@ namespace CasGD {
 			PoomItem(long id, Point location);
 
 			//Data:
-			void initData(int count);
 			int getDataCount();
 
 			template <typename type>
@@ -30,8 +28,12 @@ namespace CasGD {
 			template <typename type>
 			void setDataPointer(int id, type* data);
 
+			template <typename type>
+			void addDataPointer(type* data);
+
 			long getData(int id);
-			void setData(int id, long data);
+			void setData(int id, void* data);
+			void addData(void* data);
 
 			//Params:
 			Point getLocation();
@@ -82,11 +84,37 @@ namespace CasGD {
 	class Room {
 		private:
 			Resolution size;
-			std::vector<RoomItem> items;
-			std::vector<ViewRoom> views;
+			Resolution viewPort = {640, 480};
+			float dalay = 100; //ms
+			std::vector<RoomItem*> items;
+			std::vector<ViewRoom*> views;
+			ViewRoom* currentView;
 
 		public:
-			
+			Room(Resolution size);
+			Room(float w, float h);
 
+			Resolution getSize();
+			Resolution getViewPoint();
+
+			void setSize(Resolution size);
+			void setSize(float w, float h);
+			void setViewPort(Resolution size);
+			void setViewPort(float w, float h);
+
+			int getItemsCount();
+			int getViewsCount();
+			RoomItem* getItemFromIndex(int i);
+			RoomItem* getItemFromID(long id);
+			ViewRoom* getView(int index);
+
+			void createItem(Register register, float x, float y, int id);
+			void createItem(Register register, float x, float y, std::string name);	
+
+			ViewRoom* createViewFormObjectID(int objectID);
+			ViewRoom* createViewFormItemID(long itemID);
+
+			bool killItem(long itemID);
+			bool killItems(int objectID);
 	};
 }
