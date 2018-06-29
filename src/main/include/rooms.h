@@ -49,6 +49,13 @@ namespace CasGD {
 			void  setSpeed(float speed);
 	};
 
+	enum BorderSide {
+		BORDER_RIGTH,
+		BORDER_TOP,
+		BORDER_LEFT,
+		BORDER_BOTTOM
+	}
+
 	class ViewRoom {
 		private:
 			bool isIDType = true;
@@ -67,6 +74,7 @@ namespace CasGD {
 			Point getLocation();
 			Resolution getSize();
 			Rectangle getBounce();
+			float getBorder(BorderSide side);
 
 			void setLocation(Point location);
 			void setLocation(float x, float y);
@@ -74,6 +82,7 @@ namespace CasGD {
 			void setSize(float w, float h);
 			void setBounce(Rectangle bounce);
 			void setBounce(float x, float y, float w, float h);
+			void setBorder(BorderSide side, float width);
 
 			int  getTargetID();
 			void setTargetID(int idTarget);

@@ -1,7 +1,7 @@
 #include "include/rooms.h"
 
 namespace CasGD {
-	//==RoomItem
+	//==RoomItem===========================================================================
 	RoomItem::RoomItem(long id) {
 		this->id = id;
 	}
@@ -96,13 +96,13 @@ namespace CasGD {
 		this->speed = speed;
 	}
 
-	//==ViewRoom
+	//==ViewRoom==================================================================================
 	bool isIDType = true;
 			Rectangle bounce;
 			int idTarget;
 
 			float* padding = new float[4]{32, 32, 32, 32}; //px
-		public:
+			
 			ViewRoom(Rectangle bounce, int idTarget);
 			ViewRoom(Rectangle bounce, int idTarget, bool isIDType);
 			ViewRoom(Point location, Resolution size, float h, int idTarget);
