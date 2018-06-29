@@ -29,14 +29,12 @@ namespace CasGD {
 
 	template <typename type>
 	void RoomItem::setDataPointer(int id, type* data) {
-		if (id < 0 && id > this->data.size() - 1) return 0;
-		this->data[id] = static_cast<void*>(data);
+		this->setData(id, static_cast<void*>(data));
 	}
 
 	template <typename type>
-	void RoomItem::addDataPointer(int id, type* data) {
-		if (id < 0 && id > this->data.size() - 1) return 0;
-		this->data.insert(this->data.end() ,static_cast<void*>(data));
+	void RoomItem::addDataPointer(type* data) {
+		this->addData(static_cast<void*>(data));
 	}
 	
 	void* RoomItem::getData(int id) {
@@ -46,12 +44,12 @@ namespace CasGD {
 
 	void RoomItem::setData(int id, void* data) {
 		if (id < 0 && id > this->data.size() - 1) return 0;
-		//this->dataList[id] = data;
-
-		//HZ....
+		this->data[id] = data;
 	}
 
-	void RoomItem::addData(void* data);
+	void RoomItem::addData(void* data) {
+		this->data.insert(this->data.end(), data);
+	}
 
 	//Params:
 	Point RoomItem::getLocation() {
