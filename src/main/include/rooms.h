@@ -6,7 +6,7 @@ namespace CasGD {
 		private:
 			int gameObjectId;
 
-			Point location = {0, 0};
+			Point position = {0, 0};
 			float direction = 0;
 			float speed = 0;
 
@@ -17,7 +17,7 @@ namespace CasGD {
 		public:
 			RoomItem(long id);
 			RoomItem(long id, int x, int y);
-			PoomItem(long id, Point location);
+			PoomItem(long id, Point position);
 
 			//Data:
 			int getDataCount();
@@ -36,9 +36,9 @@ namespace CasGD {
 			void addData(void* data);
 
 			//Params:
-			Point getLocation();
-			void  setLocation(Point location);
-			void  setLocation(int x, int y);
+			Point getPosition();
+			void  setPosition(Point position);
+			void  setPosition(int x, int y);
 			int getX();
 			int setX(int x);
 			int getY();
@@ -60,32 +60,32 @@ namespace CasGD {
 		private:
 			bool isIDType = true;
 			Rectangle bounce;
-			int idTarget;
+			long idTarget;
 
 			float* padding = new float[4]{32, 32, 32, 32}; //px
 		public:
-			ViewRoom(Rectangle bounce, int idTarget);
-			ViewRoom(Rectangle bounce, int idTarget, bool isIDType);
-			ViewRoom(Point location, Resolution size, float h, int idTarget);
-			ViewRoom(Point location, Resolution size, float h, int idTarget, bool isIDType);
-			ViewRoom(float x, float y, float w, float h, int idTarget);
-			ViewRoom(float x, float y, float w, float h, int idTarget, bool isIDType);
+			ViewRoom(Rectangle bounce, long idTarget);
+			ViewRoom(Rectangle bounce, long idTarget, bool isIDType);
+			ViewRoom(Point position, Resolution size, long idTarget);
+			ViewRoom(Point position, Resolution size, long idTarget, bool isIDType);
+			ViewRoom(float x, float y, float w, float h, long idTarget);
+			ViewRoom(float x, float y, float w, float h, long idTarget, bool isIDType);
 
-			Point getLocation();
+			Point getposition();
 			Resolution getSize();
 			Rectangle getBounce();
 			float getBorder(BorderSide side);
 
-			void setLocation(Point location);
-			void setLocation(float x, float y);
+			void setPosition(Point position);
+			void setPosition(float x, float y);
 			void setSize(Resolution size);
 			void setSize(float w, float h);
 			void setBounce(Rectangle bounce);
 			void setBounce(float x, float y, float w, float h);
 			void setBorder(BorderSide side, float width);
 
-			int  getTargetID();
-			void setTargetID(int idTarget);
+			long getTargetID();
+			void setTargetID(long idTarget);
 
 			bool isGameObjectTarget();
 	};

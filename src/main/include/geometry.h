@@ -16,7 +16,7 @@ namespace CasGD {
 	};
 
 	struct Redrangle {
-		Point pos;
+		Point position;
 		Resolution size;
 	};
 
