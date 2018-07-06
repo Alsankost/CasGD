@@ -20,7 +20,7 @@ namespace CasGD {
 		this->objects[id] = obj;
 	}
 
-	int Register::getIdFromObject(GameObject* obj) {
+	int Register::getIDFromObject(GameObject* obj) {
 		for (int i = 0; i < this->objectsCount; i++) {
 			if (objects[i] == obj) {
 				return i;
@@ -28,7 +28,7 @@ namespace CasGD {
 		}
 	}
 
-	int Register::getIdFromName(char* name) {
+	int Register::getIDFromName(char* name) {
 		for (int i = 0; i < this->objectsCount; i++) {
 			if (objects[i] == name) {
 				return i;

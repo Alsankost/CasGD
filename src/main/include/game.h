@@ -1,0 +1,5 @@
+namespace CasGD {
+	class Game {
+
+	};
+}

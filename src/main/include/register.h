@@ -10,10 +10,10 @@ namespace CasGD {
 			Register(int count);
 
 			int getObjectsCount();
-			CasGD::GameObject* getObject(int id);
-			bool setObject(int id, GasGD::GameObject* obj);
+			GameObject* getObject(int id);
+			bool setObject(int id, GameObject* obj);
 
-			int getIdFromObject(CasGD::GameObject* obj);
-			int getIdFromName(std::string name);
+			int getIDFromObject(GameObject* obj);
+			int getIDFromName(std::string name);
 	};
 }

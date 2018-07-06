@@ -4,7 +4,7 @@
 namespace CasGD {
 	class RoomItem {
 		private:
-			int gameObjectId;
+			int gameObjectID;
 
 			Point position = {0, 0};
 			float direction = 0;
@@ -15,9 +15,11 @@ namespace CasGD {
 			long id = 0;
 
 		public:
-			RoomItem(long id);
-			RoomItem(long id, int x, int y);
-			PoomItem(long id, Point position);
+			RoomItem(int gameObjectID, long id);
+			RoomItem(int gameObjectID, long id, int x, int y);
+			PoomItem(int gameObjectID, long id, Point position);
+
+			int getGameObjectID();
 
 			//Data:
 			int getDataCount();
@@ -47,6 +49,8 @@ namespace CasGD {
 			void  setDirection(float direction);
 			float getSpeed();
 			void  setSpeed(float speed);
+
+			long getID();
 	};
 
 	enum BorderSide {
@@ -56,32 +60,32 @@ namespace CasGD {
 		BORDER_BOTTOM
 	}
 
-	class ViewRoom {
+	class RoomView {
 		private:
 			bool isIDType = true;
-			Rectangle bounce;
+			Point position = {0, 0};
+			Resolution roomPort;
+			Resolution winPort;
 			long idTarget;
 
 			float* padding = new float[4]{32, 32, 32, 32}; //px
 		public:
-			ViewRoom(Rectangle bounce, long idTarget);
-			ViewRoom(Rectangle bounce, long idTarget, bool isIDType);
-			ViewRoom(Point position, Resolution size, long idTarget);
-			ViewRoom(Point position, Resolution size, long idTarget, bool isIDType);
-			ViewRoom(float x, float y, float w, float h, long idTarget);
-			ViewRoom(float x, float y, float w, float h, long idTarget, bool isIDType);
+			RoomView(Resolution screenPort, long idTarget);
+			RoomView(Resolution screenPort, long idTarget, bool isIDType);
+			RoomView(float w, float h, long idTarget);
+			RoomView(float w, float h, long idTarget, bool isIDType);
 
-			Point getposition();
-			Resolution getSize();
-			Rectangle getBounce();
+			Point getPosition();
+			Resolution getRoomPort();
+			Resolution getScreenPort();
 			float getBorder(BorderSide side);
 
 			void setPosition(Point position);
 			void setPosition(float x, float y);
-			void setSize(Resolution size);
-			void setSize(float w, float h);
-			void setBounce(Rectangle bounce);
-			void setBounce(float x, float y, float w, float h);
+			void setRoomPort(Resolution size);
+			void setRoomPort(float w, float h);
+			void setScreenPort(Resolution size);
+			void setScreenPort(float w, float h);
 			void setBorder(BorderSide side, float width);
 
 			long getTargetID();
@@ -96,32 +100,40 @@ namespace CasGD {
 			Resolution viewPort = {640, 480};
 			float dalay = 100; //ms
 			std::vector<RoomItem*> items;
-			std::vector<ViewRoom*> views;
-			ViewRoom* currentView;
+			//std::vector<RoomView*> views;
+			RoomView* currentView;
 
 		public:
 			Room(Resolution size);
 			Room(float w, float h);
 
 			Resolution getSize();
-			Resolution getViewPoint();
+			//Resolution getViewPoint();
 
 			void setSize(Resolution size);
 			void setSize(float w, float h);
-			void setViewPort(Resolution size);
-			void setViewPort(float w, float h);
+
+			void setView(RoomView* view);
+			//void setViewPort(Resolution size);
+			//void setViewPort(float w, float h);
+
+			//void setCurrentView(int id);
+			//void setCurrentView(RoomView* view);
 
 			int getItemsCount();
-			int getViewsCount();
+			//int getViewsCount();
 			RoomItem* getItemFromIndex(int i);
 			RoomItem* getItemFromID(long id);
-			ViewRoom* getView(int index);
 
-			void createItem(Register register, float x, float y, int id);
-			void createItem(Register register, float x, float y, std::string name);	
+			RoomView* getView();
+			//RoomView* getCurrentView();
 
-			ViewRoom* createViewFormObjectID(int objectID);
-			ViewRoom* createViewFormItemID(long itemID);
+			RoomItem* createItem(Register* reg, float x, float y, int idObject);
+			RoomItem* createItem(Register* reg, float x, float y, std::string name);	
+
+			RoomView* createViewFormObjectID(int objectID);
+			RoomView* createViewFormItemID(long itemID);
+			RoomView* createView();
 
 			bool killItem(long itemID);
 			bool killItems(int objectID);

@@ -2,18 +2,25 @@
 
 namespace CasGD {
 	//==RoomItem===========================================================================
-	RoomItem::RoomItem(long id) {
+	RoomItem::RoomItem(int gameObjectID, long id) {
+		this->gameObjectID = gameObjectID;
 		this->id = id;
 	}
 
-	RoomItem::RoomItem(long id, int x, int y) {
+	RoomItem::RoomItem(int gameObjectID, long id, int x, int y) {
+		this->gameObjectID = gameObjectID;
 		this->id = id;
 		this->position = {x, y};
 	}
 
-	RoomItem::PoomItem(long id, Point position) {
+	RoomItem::PoomItem(int gameObjectID, long id, Point position) {
+		this->gameObjectID = gameObjectID;
 		this->id = id;
 		this->position = position;
+	}
+
+	int getGameObjectID() {
+		return this->gameObjectID;
 	}
 
 	//Data:
@@ -96,47 +103,51 @@ namespace CasGD {
 		this->speed = speed;
 	}
 
+	long getID() {
+		return this->id;
+	}
 
-	//==ViewRoom==================================================================================			
-	ViewRoom::ViewRoom(Rectangle bounce, int idTarget) {
+
+	//==RoomView==================================================================================			
+	RoomView::RoomView(Rectangle bounce, int idTarget) {
 		this->setBounce(bounce);
 		this->idTarget = idTarget;
 	}
 
-	ViewRoom::ViewRoom(Rectangle bounce, int idTarget, bool isIDType) {
-		ViewRoom::RoomItem(bounce, idTarget);
+	RoomView::RoomView(Rectangle bounce, int idTarget, bool isIDType) {
+		RoomView::RoomItem(bounce, idTarget);
 		this->isIDType = isIDType;
 	}
 
-	ViewRoom::ViewRoom(Point position, Resolution size, int idTarget) {
-		ViewRoom::RoomItem(Rectangle{padding, size}, idTarget);
+	RoomView::RoomView(Point position, Resolution size, int idTarget) {
+		RoomView::RoomItem(Rectangle{padding, size}, idTarget);
 	}
 
-	ViewRoom::ViewRoom(Point position, Resolution size, int idTarget, bool isIDType) {
-		ViewRoom::RoomItem(Rectangle{padding, size}, idTarget, isIDType);
+	RoomView::RoomView(Point position, Resolution size, int idTarget, bool isIDType) {
+		RoomView::RoomItem(Rectangle{padding, size}, idTarget, isIDType);
 	}
 
-	ViewRoom::ViewRoom(float x, float y, float w, float h, int idTarget) {
-		ViewRoom::RoomItem(Rectangle{Point(x, y), Size(w, h)}, idTarget);
+	RoomView::RoomView(float x, float y, float w, float h, int idTarget) {
+		RoomView::RoomItem(Rectangle{Point(x, y), Size(w, h)}, idTarget);
 	}
 
-	ViewRoom::ViewRoom(float x, float y, float w, float h, int idTarget, bool isIDType) {
-		ViewRoom::RoomItem(Rectangle{Point(x, y), Size(w, h)}, idTarget, isIDType);
+	RoomView::RoomView(float x, float y, float w, float h, int idTarget, bool isIDType) {
+		RoomView::RoomItem(Rectangle{Point(x, y), Size(w, h)}, idTarget, isIDType);
 	}
 
-	Point ViewRoom::getPosition() {
+	Point RoomView::getPosition() {
 		return this->bounce.position;
 	}
 
-	Resolution ViewRoom::getSize() {
-		return this->bounce.size;
+	Resolution RoomView::getRoomPort() {
+		return this->roomPort;
 	}
 
-	Rectangle ViewRoom::getBounce() {
-		return this->bounce;
+	Resolution RoomView::getScreenPort() {
+		return this->screenPort;
 	}
 	
-	float ViewRoom::getBorder(BorderSide side) {
+	float RoomView::getBorder(BorderSide side) {
 		switch (side) {
 			case BORDER_RIGTH:
 				return this->padding[0];
@@ -149,34 +160,34 @@ namespace CasGD {
 		}
 	}
 
-	void ViewRoom::setPosition(Point position) {
+	void RoomView::setPosition(Point position) {
 		if (position.x < 0 || position.y < 0) return;
 		this->bounce.position = position;
 	}
 	
-	void ViewRoom::setPosition(float x, float y) {
+	void RoomView::setPosition(float x, float y) {
 		this->setPosition({x, y});
 	}
 	
-	void ViewRoom::setSize(Resolution size) {
+	void RoomView::setRoomPort(Resolution size) {
 		if (size.w < 0 || size.y < 0) return;
-		this->bounce.size = size;
+		this->roomPort = size;
 	}
 
-	void ViewRoom::setSize(float w, float h) {
-		this->setSize({w, h});
+	void RoomView::setRoomPort(float w, float h) {
+		this->setRoomPort({w, h});
 	}
 
-	void ViewRoom::setBounce(Rectangle bounce) {
-		if (bounce.position.x < 0 || bounce.position.y < 0 || bounce.size.w < 0 || bounce.size.h < 0) return;
-		this->bounce = bounce;
+	void RoomView::setScreenPort(Resolution size) {
+		if (size.w < 0 || size.y < 0) return;
+		this->screenPort = size;
 	}
 
-	void ViewRoom::setBounce(float x, float y, float w, float h) {
-		this->setBounce({{x, y}, {w, h}});
+	void RoomView::setScreenPort(float w, float h) {
+		this->setScreenPort({w, h});
 	}
 	
-	void ViewRoom::setBorder(BorderSide side, float width) {
+	void RoomView::setBorder(BorderSide side, float width) {
 		if (width < 0) return;
 		switch (side) {
 			case BORDER_RIGTH:
@@ -195,15 +206,136 @@ namespace CasGD {
 	}
 
 	
-	long ViewRoom::getTargetID() {
+	long RoomView::getTargetID() {
 		return this->idTarget;
 	}
 
-	void ViewRoom::setTargetID(long idTarget) {
+	void RoomView::setTargetID(long idTarget) {
 		this->idTarget = idTarget;
 	}
 
-	bool ViewRoom::isGameObjectTarget() {
+	bool RoomView::isGameObjectTarget() {
 		return this->isIDType;
+	}
+
+	//==Room=====================================================================================
+	Room::Room(Resolution size) {
+		this->setSize(size);
+		this->setView(this->createView());
+
+	}
+
+	Room::Room(float w, float h) {
+		this->setSize(w, h);
+		this->setView(this->createView());
+	}
+
+	Resolution Room::getSize() {
+		return this->size;
+	}
+
+	//Resolution Room::getViewPoint() { }
+
+	void Room::setSize(Resolution size) {
+		if (size.w <= 0 && size.h <= 0) return;
+		this->size = size;
+	}
+
+	void Room::setSize(float w, float h) {
+		this->setSize(Resolution{w, h});
+	}
+
+	void Room::setView(RoomView* view) {
+		if (view == 0) return;
+		this->curretView = view;
+	}
+
+	/*
+	void Room::setViewPort(Resolution size) {
+		if (size.w <= 0 && size.h <= 0) return;
+		this->viewPort = size;
+	}
+
+	void Room::setViewPort(float w, float h) {
+		this->setViewPort(Resolution{w, h});
+	}
+	
+	void setCurrentView(int id) {
+		if (id < this->getViewsCount() - 1) return;
+		this->curretView = views[id];
+	}
+
+	void setCurrentView(RoomView* view) {
+
+	}*/
+
+	int Room::getItemsCount() {
+		return items.size();
+	}
+
+	/*
+	int Room::getViewsCount() {
+		return views.size();
+	}*/
+
+	RoomItem* Room::getItemFromIndex(int i) {
+		if (i > this->getItemsCount() - 1) return 0;
+		return items[i];
+	}
+
+	RoomItem* Room::getItemFromID(long id) {
+		for (vector<RoomItem*>::iterator it = views.begin(); it !=views.end(); it++) {
+			RoomView* tmp = *it;
+			if (tmp->getID() == id) return tmp;
+		}
+		return 0;
+	}
+
+	RoomView* Room::getView() {
+		return this->curretView;
+	}
+
+	RoomItem* Room::createItem(Register* reg, float x, float y, int idObject) {
+		if (reg == 0 || reg->getObject(idObject) == 0) return 0;
+		RoomItem* item = new RoomItem(reg.getGameObject(idObject), this->items[this->getItemsCount() - 1]->getID() + 1, x, y);
+	}
+
+	RoomItem* Room::createItem(Register* reg, float x, float y, std::string name) {
+		if (reg == 0) return 0;
+		return this->createItem(reg, x, y, reg->getIDFromName(name));
+	}
+
+	RoomView* Room::createViewFormObjectID(int objectID) {
+		return new RoomView(this->getSize(), objectID, true);
+	}
+
+	RoomView* Room::createViewFormItemID(long itemID) {
+		return new RoomView(this->getSize(), objectID);
+	}
+
+	RoomView* Room::createView() {
+
+	}
+
+	bool Room::killItem(long itemID) {
+		for (vector<RoomItem*>::iterator it = views.begin(); it != views.end(); it++) {
+			RoomView* tmp = *it;
+			if (tmp->getID() == itemID) {
+				items.erase(it);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	bool Room::killItems(int objectID) {
+		for (vector<RoomItem*>::iterator it = views.begin(); it != views.end(); it++) {
+			RoomView* tmp = *it;
+			if (tmp->getGameObjectID() == objectID) {
+				items.erase(it);
+				return true;
+			}
+		}
+		return false;
 	}
 }

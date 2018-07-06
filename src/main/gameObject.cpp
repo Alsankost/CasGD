@@ -5,23 +5,19 @@
 namespace CasGD {
 	bool comapreStr
 
-	GameObject::GameObject(char* n) {
+	GameObject::GameObject(std::string n) {
 		this->name = n;
 	}
 
-	char* GameObject::getName() {
+	std::string GameObject::getName() {
 		return this->name;
 	}
 
-	bool operator==(const GameObject* go, char* name) {
-		return strcmp(go->getName(), name) == 0;
+	bool operator==(const GameObject* go, std::string str) {
+		return str.compare(go->getName()) == 0;
 	}
 
-	bool operator==(char* name, const GameObject* go) {
+	bool operator==(std::string str, const GameObject* go) {
 		return go == name;
 	}
-
-	GameObject::~GameObject() {
-		delete[] this->name;
-	}
-}	
+}
