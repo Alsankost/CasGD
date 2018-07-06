@@ -4,6 +4,8 @@
 namespace CasGD {
 	class RoomItem {
 		private:
+			bool flagNew = true;
+			
 			int gameObjectID;
 
 			Point position = {0, 0};
@@ -51,6 +53,9 @@ namespace CasGD {
 			void  setSpeed(float speed);
 
 			long getID();
+
+			void disableNew();
+			bool isNew();
 	};
 
 	enum BorderSide {

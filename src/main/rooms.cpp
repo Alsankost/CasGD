@@ -103,8 +103,16 @@ namespace CasGD {
 		this->speed = speed;
 	}
 
-	long getID() {
+	long RoomItem::getID() {
 		return this->id;
+	}
+
+	void RoomItem::disableNew() {
+		this->flagNew = false;
+	}
+
+	bool RoomItem::isNew() {
+		return this->flagNew;
 	}
 
 
@@ -314,7 +322,7 @@ namespace CasGD {
 	}
 
 	RoomView* Room::createView() {
-
+		return new RoomView(this->getSize(), -1, true);
 	}
 
 	bool Room::killItem(long itemID) {
