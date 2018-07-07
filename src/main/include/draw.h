@@ -1,5 +1,5 @@
 namespace CasGD {
-	class Render {
+	class Draw {
 		private:
 			Room* current;
 		public:
@@ -12,8 +12,8 @@ namespace CasGD {
 			virtual void draw_Shape(const std::vector<Point>& vertex, float w);
 			virtual void draw_Elepse(const Point& p1, float w);
 
-			virtual void fill_Rectangle(const Rectangle& rect, float w);
-			virtual void fill_Shape(const std::vector<Point>& vertex, float w);
-			virtual void fill_Elepse(const Point& p1, float w);
+			virtual void fill_Rectangle(const Rectangle& rect);
+			virtual void fill_Shape(const std::vector<Point>& vertex);
+			virtual void fill_Elepse(const Point& p1);
 	};
 }

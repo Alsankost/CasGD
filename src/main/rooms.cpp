@@ -292,8 +292,8 @@ namespace CasGD {
 	}
 
 	RoomItem* Room::getItemFromID(long id) {
-		for (vector<RoomItem*>::iterator it = views.begin(); it !=views.end(); it++) {
-			RoomView* tmp = *it;
+		for (vector<RoomItem*>::iterator it = items.begin(); it != items.end(); it++) {
+			RoomItem* tmp = *it;
 			if (tmp->getID() == id) return tmp;
 		}
 		return 0;
@@ -326,8 +326,8 @@ namespace CasGD {
 	}
 
 	bool Room::killItem(long itemID) {
-		for (vector<RoomItem*>::iterator it = views.begin(); it != views.end(); it++) {
-			RoomView* tmp = *it;
+		for (vector<RoomItem*>::iterator it = items.begin(); it != items.end(); it++) {
+			RoomItem* tmp = *it;
 			if (tmp->getID() == itemID) {
 				items.erase(it);
 				return true;
@@ -337,13 +337,23 @@ namespace CasGD {
 	}
 	
 	bool Room::killItems(int objectID) {
-		for (vector<RoomItem*>::iterator it = views.begin(); it != views.end(); it++) {
-			RoomView* tmp = *it;
+		for (vector<RoomItem*>::iterator it = items.begin(); it != items.end(); it++) {
+			RoomItem* tmp = *it;
 			if (tmp->getGameObjectID() == objectID) {
 				items.erase(it);
 				return true;
 			}
 		}
 		return false;
+	}
+
+	void observe(Game* game) {
+		for (vector<RoomItem*>::iterator it = items.begin(); it != items.end(); it++) {
+			RoomView* tmp = *it;
+			if (tmp->getGameObjectID() == objectID) {
+				items.erase(it);
+				return true;
+			}
+		}
 	}
 }

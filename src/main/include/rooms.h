@@ -142,5 +142,7 @@ namespace CasGD {
 
 			bool killItem(long itemID);
 			bool killItems(int objectID);
+
+			void observe(Game* game);
 	};
 }
