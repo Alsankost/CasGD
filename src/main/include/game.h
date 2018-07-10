@@ -1,26 +1,35 @@
+#include <vector>
+#include <string>
+
 namespace CasGD {
+	class Drawing;
+	class Room;
+	class Register;
+
 	class Game {
 		private:
-			Render* render;
-			std::std::vector<Room*> rooms;
-			Room* selectedRoom;
+			Drawing* drawing;
+			Room* room;
 			Register* reg;
 
 		public:
-			Game(Render* render);
+			Game();
 
-			void render();
-			void observe();
+			virtual bool init();
+			virtual bool launch();
 
-			Render*   getRender();
+			void setRoom(Room* room);
+
+			Drawing* getDrawing();
 			Register* getRegister();
+			Room* getRoom();
 
-			int getRoomCount();
-			Room* getRoom(int i);
-			Room* getSelectedRoom();
-			void selectRoom(int i);
+			bool addItem(float x, float y, int idObject);
+			bool addItem(float x, float y, std::string name);
 
-			void newRoom(Resolution size);
-			void newRoom(float w, float h);
+			bool killItem(long idItem);
+			bool killItem(RoomItem* item);
+			bool killItems(int idObject);
+			bool killItems(std::string name);
 	};
 }

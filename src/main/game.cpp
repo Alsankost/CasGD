@@ -1,34 +1,38 @@
-#include "./include/game.h"
+#include "include/game.h"
 
 namespace CasGD {
-			Render* render;
-			std::std::vector<Room*> rooms;
+			Drawing* drawing;
+			Room* selectedRoom;
 			Register* reg;
 
-	Game::Game(Render* render) {
-		this->render = render;
+	void Game::Game() {
+		this->reg = new Register();
 	}
 
-	void Game::render() {
-		//TMP!!!
-		for (int i = 0; i < selectedRoom.getItemsCount(); i++) {
-			RoomItem* item = selectedRoom
-			GameObject* gameObject = reg->getObject();
-		}
+	void Game::setRoom(Room* room) {
+		this->room = room;
 	}
 
-	void observe();
+	Drawing* getDrawing() {
+		return drawing;
+	}
 
-	Render*   getRender();
-	Register* getRegister();
+	Register* getRegister() {
+		return reg;
+	}
 
-	int getRoomCount();
-	Room* getRoom(int i);
-	Room* getSelectedRoom();
-	void selectRoom(int i);
+	Room* getRoom() {
+		return room;
+	}
 
+	bool addItem(float x, float y, int idObject) {
+		RoomItem* item = room->createRoomItem();
+	}
 
+	bool addItem(float x, float y, std::string name);
 
-	void newRoom(Resolution size);
-	void newRoom(float w, float h);
-}
+	bool killItem(long idItem);
+	bool killItem(RoomItem* item);
+	bool killItems(int idObject);
+	bool killItems(std::string name);
+};

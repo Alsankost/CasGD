@@ -325,7 +325,7 @@ namespace CasGD {
 		return new RoomView(this->getSize(), -1, true);
 	}
 
-	bool Room::killItem(long itemID) {
+	bool Room::removeItem(long itemID) {
 		for (vector<RoomItem*>::iterator it = items.begin(); it != items.end(); it++) {
 			RoomItem* tmp = *it;
 			if (tmp->getID() == itemID) {
@@ -335,7 +335,7 @@ namespace CasGD {
 		}
 		return false;
 	}
-	
+	/*
 	bool Room::killItems(int objectID) {
 		for (vector<RoomItem*>::iterator it = items.begin(); it != items.end(); it++) {
 			RoomItem* tmp = *it;
@@ -345,15 +345,27 @@ namespace CasGD {
 			}
 		}
 		return false;
-	}
+	}*/
 
 	void observe(Game* game) {
 		for (vector<RoomItem*>::iterator it = items.begin(); it != items.end(); it++) {
-			RoomView* tmp = *it;
-			if (tmp->getGameObjectID() == objectID) {
-				items.erase(it);
-				return true;
+			RoomItem* item = *it;
+			GameObject* object = Game->getRegister()->getObject(item->getGameObjectID());
+			if (item == 0 || object == 0) continue;
+			if (item->isNew()) {
+				item->disableNew();
+				object->e_create(item, game);
 			}
+			object->e_step(item, game);
+		}
+	}
+
+	void draw(Game* game) {
+		for (vector<RoomItem*>::iterator it = items.begin(); it != items.end(); it++) {
+			RoomItem* item = *it;
+			GameObject* object = Game->getRegister()->getObject(item->getGameObjectID());
+			if (item == 0 || object == 0) continue;
+			object->e_draw(item, game, game->getDrawing());
 		}
 	}
 }

@@ -140,9 +140,9 @@ namespace CasGD {
 			RoomView* createViewFormItemID(long itemID);
 			RoomView* createView();
 
-			bool killItem(long itemID);
-			bool killItems(int objectID);
+			bool removeItem(long itemID);
 
 			void observe(Game* game);
+			void draw(Game* game);
 	};
 }
