@@ -29,7 +29,7 @@ namespace CasGD {
 
 			bool killItem(long idItem);
 			bool killItem(RoomItem* item);
-			bool killItems(int idObject);
-			bool killItems(std::string name);
+			//bool killItems(int idObject);
+			//bool killItems(std::string name);
 	};
 }

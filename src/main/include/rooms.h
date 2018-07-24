@@ -130,11 +130,13 @@ namespace CasGD {
 			RoomItem* getItemFromIndex(int i);
 			RoomItem* getItemFromID(long id);
 
+			void addItem(RoomItem* item);
+
 			RoomView* getView();
 			//RoomView* getCurrentView();
 
 			RoomItem* createItem(Register* reg, float x, float y, int idObject);
-			RoomItem* createItem(Register* reg, float x, float y, std::string name);	
+			RoomItem* createItem(Register* reg, float x, float y, std::string name);
 
 			RoomView* createViewFormObjectID(int objectID);
 			RoomView* createViewFormItemID(long itemID);

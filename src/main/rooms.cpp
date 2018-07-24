@@ -325,6 +325,11 @@ namespace CasGD {
 		return new RoomView(this->getSize(), -1, true);
 	}
 
+	void addItem(RoomItem* item) {
+		if (!item) return;
+		this->items.insert(items.end(), item);
+	}
+
 	bool Room::removeItem(long itemID) {
 		for (vector<RoomItem*>::iterator it = items.begin(); it != items.end(); it++) {
 			RoomItem* tmp = *it;
@@ -347,7 +352,7 @@ namespace CasGD {
 		return false;
 	}*/
 
-	void observe(Game* game) {
+	void Room::observe(Game* game) {
 		for (vector<RoomItem*>::iterator it = items.begin(); it != items.end(); it++) {
 			RoomItem* item = *it;
 			GameObject* object = Game->getRegister()->getObject(item->getGameObjectID());
@@ -360,7 +365,7 @@ namespace CasGD {
 		}
 	}
 
-	void draw(Game* game) {
+	void Room::draw(Game* game) {
 		for (vector<RoomItem*>::iterator it = items.begin(); it != items.end(); it++) {
 			RoomItem* item = *it;
 			GameObject* object = Game->getRegister()->getObject(item->getGameObjectID());

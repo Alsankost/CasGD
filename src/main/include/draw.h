@@ -20,6 +20,6 @@ namespace CasGD {
 
 			virtual void fill_Rectangle(const Rectangle& rect);
 			virtual void fill_Shape(const std::vector<Point>& vertex);
-			virtual void fill_Elepse(const Point& pos, );
+			virtual void fill_Elepse(const Point& pos, float wr, float hr);
 	};
 }
